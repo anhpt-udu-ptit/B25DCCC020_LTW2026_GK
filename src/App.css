@@ -1,19 +1,341 @@
-.App {
-  text-align: center;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Narrow !important overrides retain the existing JSX inline styles unchanged. */
+#root > div > nav {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 14px max(24px, calc((100% - 1064px) / 2)) !important;
+  border-bottom: 1px solid var(--color-border) !important;
+  background: var(--color-surface) !important;
 }
 
-.App-link {
-  color: #61dafb;
+#root > div > nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  margin-right: 0 !important;
+  padding: 9px 16px;
+  border-radius: var(--radius-control);
+  color: var(--color-muted);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+#root > div > nav a:hover {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+#root > div > nav a[aria-current='page'] {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-hover);
+}
+
+main {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 36px 28px 56px !important;
+}
+
+main > div {
+  min-width: 0;
+}
+
+/* Overview: the three existing figures remain readable, without extra content. */
+main > div:has(> h1) {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+main > div > h1 {
+  grid-column: 1 / -1;
+  margin-bottom: 4px;
+}
+
+main > div:has(> h1) > p {
+  display: flex;
+  align-items: center;
+  min-height: 112px;
+  margin: 0;
+  padding: 24px;
+  border: 1px solid var(--color-border);
+  border-top: 3px solid var(--color-primary);
+  border-radius: var(--radius-panel);
+  background: var(--color-surface);
+  font-size: 16px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-wrap: balance;
+}
+
+/* Filters target the existing search input, including the no-results state. */
+main > div > div:has(#search) {
+  display: flex;
+  align-items: flex-end !important;
+  flex-wrap: wrap;
+  gap: 20px !important;
+  margin-bottom: 20px !important;
+  padding: 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-panel);
+  background: var(--color-surface);
+}
+
+main > div > div:has(#search) > div:first-child {
+  flex: 1 1 240px;
+}
+
+main > div > div:has(#search) > div:last-child {
+  flex: 0 1 240px;
+}
+
+main > div:has(#search) > p {
+  color: var(--color-muted);
+  font-size: 14px;
+}
+
+table {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-spacing: 0;
+  border-radius: var(--radius-panel);
+  background: var(--color-surface);
+  text-align: left;
+}
+
+th,
+td {
+  padding: 17px 20px;
+  vertical-align: middle;
+}
+
+th {
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-muted);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+th:first-child {
+  border-top-left-radius: var(--radius-panel);
+}
+
+th:last-child {
+  border-top-right-radius: var(--radius-panel);
+}
+
+tr:not(:last-child) td {
+  border-bottom: 1px solid var(--color-border);
+}
+
+tbody tr:hover {
+  background: var(--color-bg);
+}
+
+td:first-child {
+  min-width: 190px;
+  font-weight: 600;
+}
+
+td:first-child a {
+  color: var(--color-text);
+}
+
+td:first-child a:hover {
+  color: var(--color-primary);
+}
+
+td:nth-child(2) {
+  color: var(--color-muted);
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+th:nth-child(4),
+td:nth-child(4) {
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+td.low-stock {
+  background: var(--color-warning-soft);
+  color: var(--color-warning);
+  font-weight: 700;
+}
+
+td:last-child {
+  white-space: nowrap;
+}
+
+td button {
+  min-width: 36px;
+  min-height: 36px;
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
+td button:last-child {
+  margin-left: 8px;
+  border-color: transparent;
+  background: transparent;
+  color: var(--color-danger);
+}
+
+td button:last-child:hover:not(:disabled) {
+  border-color: var(--color-danger);
+  background: var(--color-danger-soft);
+}
+
+.alert-message {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-control);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-hover);
+}
+
+.alert-message button {
+  flex-shrink: 0;
+  min-width: 36px;
+  min-height: 36px;
+  padding: 4px;
+  border-color: transparent;
+  background: transparent;
+  color: inherit;
+  font-size: 22px;
+}
+
+/* Create form and detail share a quiet, bounded reading surface. */
+main > div:has(> form),
+main > div:has(> button):not(:has(form)) {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 32px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-panel);
+  background: var(--color-surface);
+}
+
+form > div {
+  margin-bottom: 20px !important;
+}
+
+form > p {
+  padding: 12px 14px;
+  border-radius: var(--radius-control);
+  background: var(--color-danger-soft);
+  color: var(--color-danger) !important;
+  font-size: 14px;
+}
+
+button[type='submit'] {
+  min-width: 112px;
+  margin-top: 4px;
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-surface);
+}
+
+button[type='submit']:hover:not(:disabled),
+button[type='submit']:active:not(:disabled) {
+  border-color: var(--color-primary-hover);
+  background: var(--color-primary-hover);
+}
+
+main > div:has(> button):not(:has(form)) > p {
+  margin: 0;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--color-border);
+  overflow-wrap: anywhere;
+}
+
+main > div:has(> button):not(:has(form)) > p:first-child {
+  padding-top: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+main > div:has(> button):not(:has(form)) > button {
+  margin-top: 24px;
+}
+
+@media (max-width: 800px) {
+  main > div:has(> h1) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  main > div:has(> h1) > p {
+    min-height: 86px;
+  }
+
+  /* The original table has no wrapper; contain its horizontal scroll here. */
+  table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  th,
+  td {
+    padding: 14px 16px;
+  }
+
+  td:nth-child(2) {
+    min-width: 150px;
+  }
+}
+
+@media (max-width: 540px) {
+  #root > div > nav {
+    gap: 4px;
+    padding: 10px 16px !important;
+  }
+
+  #root > div > nav a {
+    padding: 9px 12px;
+  }
+
+  main {
+    padding: 24px 16px 40px !important;
+  }
+
+  h1,
+  h2 {
+    font-size: 24px;
+  }
+
+  main > div > div:has(#search) {
+    gap: 16px !important;
+    padding: 20px;
+  }
+
+  main > div > div:has(#search) > div:first-child,
+  main > div > div:has(#search) > div:last-child {
+    flex: 1 1 100%;
+  }
+
+  main > div:has(> form),
+  main > div:has(> button):not(:has(form)) {
+    padding: 24px 20px;
+  }
+
+  form button[type='submit'] {
+    width: 100%;
+  }
 }
 
